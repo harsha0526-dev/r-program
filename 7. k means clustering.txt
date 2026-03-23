@@ -1,0 +1,77 @@
+K-Means Clustering and Visualization
+*************************************
+
+Aim:
+*****
+To apply the K-Means clustering algorithm on the Iris dataset using R, group the data into three clusters based on feature similarity, and visualize the cluster assignments.
+
+Algorithm: 
+***********
+Step 1: Load the Iris dataset available in R.
+Step 2: Display the first few records to understand the data.
+Step 3: Select only the numerical features (Sepal Length, Sepal Width, Petal Length, Petal Width).
+Step 4: Standardize the selected data using the scale() function to bring all values to the same range.
+Step 5: Set the number of clusters K=3.
+Step 6: Apply the K-Means clustering algorithm using the kmeans() function.
+Step 7: Compute and display the cluster centers.
+Step 8: Obtain the cluster assignment for each data point.
+Step 9: Count the number of data points in each cluster using a frequency table.
+Step 10: Add the cluster labels to the original dataset.
+Step 11: Display sample records from each cluster.
+Step 12: Visualize the clusters using a scatter plot with different colors for each cluster.
+Step 13: Compare the formed clusters with the actual species labels.
+
+Program:
+*********
+# Load dataset
+data(iris)
+head(iris)
+
+# Select numeric features
+iris_data <- iris[, 1:4]
+head(iris_data)
+
+
+# Standardize data
+iris_scaled <- scale(iris_data)
+head(iris_scaled)
+
+# Apply K-Means clustering (K = 3)
+set.seed(123)
+kmeans_result <- kmeans(iris_scaled, centers = 3)
+kmeans_result$centers
+
+
+# View cluster assignments
+kmeans_result$cluster
+table(kmeans_result$cluster)
+
+# Add cluster labels to dataset
+iris_clustered <- data.frame(iris_data, Cluster = as.factor(kmeans_result$cluster))
+
+# View clustered data
+head(iris_clustered[iris_clustered$Cluster == 1, ])
+head(iris_clustered[iris_clustered$Cluster == 2, ])
+head(iris_clustered[iris_clustered$Cluster == 3, ])
+
+# Visualize clusters using first two features
+plot(iris_data$Sepal.Length, iris_data$Sepal.Width,
+     col = kmeans_result$cluster,
+     pch = 19,
+     main = "K-Means Clustering on Iris Dataset",
+     xlab = "Sepal Length",
+     ylab = "Sepal Width")
+
+# Compare clusters with actual species
+table(kmeans_result$cluster, iris$Species)
+
+conf_matrix <- table(iris$Species, kmeans_result$cluster)
+
+accuracy <- sum(apply(conf_matrix, 1, max)) / sum(conf_matrix)
+accuracy
+
+
+
+Result:
+********
+K-Means grouped the Iris data into three clear clusters, showing how it can naturally find patterns without using any predefined labels.

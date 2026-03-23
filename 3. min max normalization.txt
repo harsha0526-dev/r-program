@@ -1,0 +1,22 @@
+data(mtcars)
+mtcars
+head(mtcars)
+summary(mtcars)
+min_max_normalize<-function(x){(x-min(x)/max(x)-min(x)}
+mtcars_norm<-as.data.frame(lapply(mtcars,min_max_normalize))
+head(mtcars_norm)
+mtcars$mpg_normalized<-min_max_normalize(mtcars$mpg)
+head(mtcars)
+#choose cran method
+install.packages("dplyr")
+library(dplyr)
+mtcars_normalized_df<-mtcars%>%mutate(across(where(is.numeric),min_max_normalize)
+head(mtcars_normalized_diff)
+hist(mtcars$mpg,
+	main="histogram of mpg (original),
+	xlab="mpg",
+	col="light blue")
+hist(mtcars$mpg_normalized,
+	main="histogram of mpg (normalized),
+	xlab="normalized mpg",
+	col="light green")

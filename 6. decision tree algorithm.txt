@@ -1,0 +1,60 @@
+AIM
+*****
+To implement a Decision Tree classification algorithm using the Iris dataset in R and evaluate the model performance using a confusion matrix and accuracy.
+
+ALGORITHM
+*********
+Step 1: Load the required R libraries (rpart and rpart.plot).
+Step 2: Load the built-in Iris dataset.
+Step 3: Split the dataset into training data (70%) and testing data (30%) using random sampling.
+Step 4: Train a Decision Tree model using the training dataset.
+Step 5: Visualize the constructed decision tree.
+Step 6: Predict the class labels for the testing dataset.
+Step 7: Create a confusion matrix to compare predicted and actual class labels.
+Step 8: Calculate the accuracy of the model.
+
+PROGRAM:
+********
+# Load required libraries
+library(rpart)
+library(rpart.plot)
+
+# Load dataset
+data(iris)
+
+# View dataset
+head(iris)
+
+# Split data into training (70%) and testing (30%) sets
+set.seed(123)
+index <- sample(1:nrow(iris), 0.7 * nrow(iris))
+index
+train_data <- iris[index, ]
+head(train_data)
+nrow(train_data)
+test_data <- iris[-index, ]
+head(test_data)
+nrow(test_data)
+
+# Train Decision Tree model
+dt_model <- rpart(Species ~ ., data = train_data, method = "class")
+
+# Plot Decision Tree
+rpart.plot(dt_model)
+
+# Prediction
+predictions <- predict(dt_model, test_data, type = "class")
+predictions
+
+# Confusion Matrix
+conf_matrix <- table(Predicted = predictions, Actual = test_data$Species)
+conf_matrix
+
+# Accuracy
+accuracy <- sum(diag(conf_matrix)) / sum(conf_matrix)
+accuracy
+
+
+RESULT:
+********
+The Decision Tree model was successfully trained on the Iris dataset and used to classify flower species. The model achieved high accuracy on the test data, demonstrating effective classification performance.

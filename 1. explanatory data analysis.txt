@@ -1,0 +1,100 @@
+Experiment No: 01
+Title : Exploratory Data Analysis (EDA) using Summary Statistics and Visualizations with R Tool
+________________________________________
+Aim : To perform Exploratory Data Analysis using summary statistics and graphical visualizations with the R tool.
+________________________________________
+Software / Tools Required
+•	R Programming Language
+•	RStudio
+________________________________________
+Dataset Used
+Built-in dataset: mtcars
+________________________________________
+Description of Dataset
+The mtcars dataset consists of 32 observations and 11 variables related to different automobile characteristics such as mileage, cylinders, horsepower, weight, etc.
+________________________________________
+Procedure
+1.	Load the dataset in R.
+2.	Understand the structure and dimensions of the data.
+3.	Compute summary statistics.
+4.	Check for missing values.
+5.	Create visualizations such as histogram, boxplot, bar plot, scatter plot, and heatmap.
+6.	Interpret the results.
+________________________________________
+R Program
+# Load dataset
+data(mtcars)
+
+# View first few records
+head(mtcars)
+
+# Structure and dimensions
+str(mtcars)
+dim(mtcars)
+
+# Summary statistics
+summary(mtcars)
+
+# Mean and Median of MPG
+mean(mtcars$mpg)
+median(mtcars$mpg)
+
+# Dispersion measures
+sd(mtcars$mpg)
+var(mtcars$mpg)
+range(mtcars$mpg)
+
+# Check missing values
+sum(is.na(mtcars))
+
+# Histogram
+hist(mtcars$mpg,
+     main = "Histogram of MPG",
+     xlab = "Miles Per Gallon",
+     col = "lightblue")
+
+# Boxplot
+boxplot(mtcars$mpg,
+        main = "Boxplot of MPG",
+        col = "orange")
+
+# Barplot
+barplot(table(mtcars$cyl),
+        main = "Cars by Number of Cylinders",
+        xlab = "Cylinders",
+        ylab = "Count",
+        col = "lightgreen")
+
+# Scatter plot
+plot(mtcars$wt, mtcars$mpg,
+     main = "Weight vs MPG",
+     xlab = "Weight",
+     ylab = "MPG",
+     col = "blue",
+     pch = 19)
+
+# Correlation Heatmap
+cor_matrix <- cor(mtcars)
+heatmap(cor_matrix)
+________________________________________
+Output
+•	Summary statistics of the dataset were displayed.
+•	Histogram shows the distribution of MPG.
+•	Boxplot identifies possible outliers.
+•	Barplot shows count of cars based on cylinders.
+•	Scatter plot shows relationship between weight and mileage.
+•	Heatmap displays correlation between variables.
+________________________________________
+Result
+Exploratory Data Analysis was successfully performed using R. Summary statistics and visualizations helped in understanding data distribution, relationships, and variability.
+________________________________________
+Conclusion
+EDA using R is an effective approach to analyze data characteristics before applying statistical or machine learning models.
+________________________________________
+Viva Voce Questions
+1.	What is Exploratory Data Analysis?
+2.	What are summary statistics?
+3.	Purpose of boxplot and histogram?
+4.	What is correlation?
+5.	Why is EDA important?
+

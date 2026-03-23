@@ -1,0 +1,74 @@
+Aim:
+******
+To reduce the dimensionality of a dataset using Principal Component Analysis (PCA) while retaining maximum variance and to visualize the principal components for better understanding of the data structure.
+
+Algorithm:
+***********
+Step 1: Load the built-in Iris dataset using data(iris) to make it available in the R environment.
+
+Step 2: View the first few rows of the dataset using head(iris) to understand its structure and contents.
+
+Step 3: Select only the numeric columns (Sepal.Length, Sepal.Width, Petal.Length, Petal.Width) using iris[, 1:4] and store in iris_data.
+
+Step 4: View the first few rows of iris_data using head(iris_data) to confirm the numeric data is selected correctly.
+
+Step 5: Apply PCA using prcomp() with scaling (scale. = TRUE) to standardize the features and store the result in pca_result.
+
+Step 6: Display a summary of the PCA result using summary(pca_result) to see the standard deviation, proportion of variance, and cumulative variance explained by each principal component.
+
+Step 7: Compute the eigenvalues (variance of each principal component) using pca_result$sdev^2.
+
+Step 8: Compute the proportion of variance explained by each principal component using pca_result$sdev^2 / sum(pca_result$sdev^2).
+
+Step 9: Reduce the dataset to the first two principal components using pca_result$x[, 1:2] and store in pca_data.
+
+Step 10: View the first few rows of the reduced dataset using head(pca_data) to verify the PCA transformation.
+
+Step 11: Create a scree plot using plot(pca_result, type = "l") to visualize the variance explained by each principal component and decide how many components to retain.
+
+Step 12: Create a 2D scatter plot of the first two principal components using plot(pca_data, col=iris$Species, pch=19) to visualize the distribution and separation of different Iris species.
+
+Step 13: Add a legend to the scatter plot using legend("topright", legend=levels(iris$Species), col=1:3, pch=19) to identify species by color.
+
+Program
+*********
+# Load dataset
+data(iris)
+
+# View dataset
+head(iris)
+
+# Select numeric columns
+iris_data <- iris[, 1:4]
+head(iris_data)
+
+# Apply PCA with scaling
+pca_result <- prcomp(iris_data, scale. = TRUE)
+
+# PCA summary
+summary(pca_result)
+
+# Eigenvalues (variance of components)
+pca_result$sdev^2
+
+# Proportion of variance
+pca_result$sdev^2 / sum(pca_result$sdev^2)
+
+# Reduce to first two principal components
+pca_data <- pca_result$x[, 1:2]
+
+# View reduced dataset
+head(pca_data)
+
+# Scree plot
+plot(pca_result, type = "l")
+
+# Scatter plot of first two principal components
+plot(pca_data, col=iris$Species, pch=19,
+     xlab="PC1", ylab="PC2", main="PCA: PC1 vs PC2")
+legend("topright", legend=levels(iris$Species),
+       col=1:3, pch=19)
+
+Result
+*******
+The Iris dataset was reduced to two principal components using PCA. The scatter plot of PC1 vs PC2 showed clear separation between the three Iris species.

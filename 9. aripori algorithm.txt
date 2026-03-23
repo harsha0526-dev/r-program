@@ -1,0 +1,74 @@
+Apriori algorithm
+*****************
+
+AIM
+****
+To apply the Apriori algorithm on the Groceries dataset to discover association rules using support, confidence, and lift measures.
+
+ALGORITHM 
+**********
+Step 1: Load the transaction dataset (Groceries).
+Step 2: Set minimum threshold values for support and confidence.
+Step 3: Generate frequent itemsets that satisfy the minimum support.
+Step 4: Generate association rules from the frequent itemsets.
+Step 5: Calculate support, confidence, and lift for each rule.
+Step 6: Filter strong rules based on lift greater than a specified value (e.g., lift > 2).
+Step 7: Sort the rules based on confidence or lift.
+Step 8: Visualize the frequent items using item frequency plots.
+Step 9: Save the generated rules into a CSV file.
+
+PROGRAM
+********
+# install.packages("arules")
+# install.packages("arulesViz", dependencies = TRUE)
+
+# Load required libraries
+library(arules)
+library(arulesViz)
+
+# Load Groceries dataset
+data(Groceries)
+
+# Inspect dataset
+summary(Groceries)
+inspect(Groceries[1:5])
+
+# Apply Apriori algorithm
+rules <- apriori(Groceries, 
+                 parameter = list(supp = 0.01, conf = 0.5))
+
+# Check number of rules generated
+length(rules)
+
+# View top 10 rules sorted by lift
+inspect(head(sort(rules, by = "lift", decreasing = TRUE), 10))
+
+# View top 10 rules sorted by confidence
+inspect(head(sort(rules, 
+                  by = "confidence", 
+                  decreasing = TRUE), 10))
+
+# Filter strong rules (lift > 2)
+strong_rules <- subset(rules, lift > 2)
+
+# View strong rules
+inspect(head(sort(strong_rules, 
+                  by = "lift", 
+                  decreasing = TRUE), 10))
+
+# Plot top frequent items
+itemFrequencyPlot(Groceries, topN = 10)
+
+# Plot top frequent items (absolute count)
+itemFrequencyPlot(Groceries, topN = 10, type = "absolute")
+
+# Save rules to CSV file
+write(rules, file = "association_rules.csv", sep = ",", quote = TRUE)
+
+# Check working directory
+getwd()
+
+
+RESULT
+*******
+The Apriori algorithm successfully generated association rules from the Groceries dataset, and strong rules were identified based on higher confidence and lift values.

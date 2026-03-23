@@ -1,0 +1,63 @@
+Naive Bayes Classification
+***************************
+
+Aim
+****
+To perform classification using the Naive Bayes algorithm on the Iris dataset and evaluate the model performance using accuracy in the R programming environment.
+
+Algorithm 
+**********
+Step 1: Load the required library e1071.
+Step 2: Load the built-in Iris dataset.
+Step 3: Split the dataset into training set (70%) and testing set (30%) using random sampling.
+Step 4: Train the Naive Bayes classifier using the training data.
+Step 5: Predict the class labels for the test data.
+Step 6: Create a confusion matrix by comparing predicted and actual class labels.
+Step 7: Calculate the classification accuracy of the model.
+
+Program
+********
+#instal library using menu
+
+# Load required library
+library(e1071)
+
+# Load dataset
+data(iris)
+
+# View dataset
+head(iris)
+
+# Split data into training (70%) and testing (30%) sets
+set.seed(456)
+index <- sample(1:nrow(iris), 0.7 * nrow(iris))
+index
+train_data <- iris[index, ]
+train_data
+test_data <- iris[-index, ]
+test_data
+
+nrow(train_data)
+nrow(test_data)
+
+
+# Train Naïve Bayes model
+nb_model <- naiveBayes(Species ~ ., data = train_data)
+
+# Prediction
+predictions <- predict(nb_model, test_data)
+predictions
+
+# Confusion matrix
+conf_matrix <- table(Predicted = predictions, Actual = test_data$Species)
+conf_matrix
+
+# Accuracy
+accuracy <- sum(diag(conf_matrix)) / sum(conf_matrix)
+accuracy
+
+
+
+Result
+******
+Naive Bayes algorithm was applied, class labels were predicted, and accuracy was calculated successfully.

@@ -1,0 +1,93 @@
+Handle Missing Values and Detect Outliers
+*****************************************
+
+Aim:
+****
+To identify and handle missing values using suitable techniques and to detect outliers in a dataset using statistical methods.
+
+Algorithm
+*********
+
+Step 1: Load the built-in dataset using data(airquality).
+Step 2: Display first few records using head(airquality) to understand the data.
+Step 3: Check dataset structure and data types using str(airquality).
+Step 4: Generate basic statistical summary using summary(airquality).
+Step 5: Find total missing values in the dataset using sum(is.na(airquality)).
+Step 6: Find missing values column-wise using colSums(is.na(airquality)).
+Step 7: Extract and display rows containing missing values using !complete.cases() and store in removed_rows.
+Step 8: Handle missing values (Method 1) by removing incomplete rows using na.omit() and store in air_no_na.
+Step 9: Handle missing values (Method 2) by calculating mean for Ozone and Solar.R using mean(..., na.rm=TRUE).
+Step 10: Replace missing values in Ozone and Solar.R with their mean values (mean imputation).
+Step 11: Display the updated dataset after filling missing values.
+Step 12: Plot boxplot for Ozone to visualize spread and potential outliers.
+Step 13: Compute Q1 (25%) and Q3 (75%) of Ozone using quantile().
+Step 14: Compute IQR = Q3 − Q1 to measure the middle spread of the data.
+Step 15: Identify and display outlier values where Ozone < lower_bound or Ozone > upper_bound.
+
+# Load dataset
+data(airquality)
+
+# View first few dataset
+head(airquality)
+
+# Structure and summary
+str(airquality)
+summary(airquality)
+
+# Identify missing values
+sum(is.na(airquality))
+
+#Identify missing values in each column
+colSums(is.na(airquality))
+
+# Identify and display rows containing missing values
+removed_rows <- airquality[!complete.cases(airquality), ]
+removed_rows
+
+# Handling missing values
+#---------------------------
+# Method 1: Remove rows with missing values
+air_no_na <- na.omit(airquality)
+air_no_na
+
+
+# Method 2: Replace missing values with mean
+# Calculate mean of Ozone and Solar.R columns (excluding NA values)
+mean_ozone <- mean(airquality$Ozone, na.rm = TRUE)
+mean_solar <- mean(airquality$Solar.R, na.rm = TRUE)
+
+# Display calculated mean values
+mean_ozone
+mean_solar
+
+# Replace missing values with respective column means
+airquality$Ozone[is.na(airquality$Ozone)] <- mean_ozone
+airquality$Solar.R[is.na(airquality$Solar.R)] <- mean_solar
+
+# Display the updated dataset after mean imputation
+airquality
+
+# Detect outliers using boxplot
+boxplot(airquality$Ozone,
+        main = "Boxplot of Ozone",
+        col = "lightblue")
+
+# Outlier Detection
+# -------------------------------
+
+# Outlier detection using IQR
+Q1 <- quantile(airquality$Ozone, 0.25)
+Q3 <- quantile(airquality$Ozone, 0.75)
+IQR_value <- Q3 - Q1
+IQR_value
+
+lower_bound <- Q1 - 1.5 * IQR_value
+upper_bound <- Q3 + 1.5 * IQR_value
+
+outliers <- airquality$Ozone[airquality$Ozone < lower_bound | airquality$Ozone > upper_bound]
+outliers
+
+
+Result:
+********
+Missing values were identified and handled using deletion and mean imputation techniques. Outliers were detected using boxplot and the IQR method.

@@ -1,0 +1,88 @@
+FP-Growth algorithm
+*******************
+
+
+AIM
+*****
+To implement the FP-Growth algorithm using the Groceries dataset to generate frequent itemsets and strong association rules.
+
+
+ALGORITHM 
+**********
+Step 1: Load the required libraries (arules, arulesViz, fim4r).
+Step 2: Load the Groceries transaction dataset.
+Step 3: Display the summary of the dataset to understand its structure.
+Step 4: Inspect the first five transactions in the dataset.
+Step 5: Apply the ECLAT algorithm to generate frequent itemsets using minimum support 0.01.Step 
+6: Generate association rules from the frequent itemsets.
+Step 7: Calculate support, confidence, and lift for each generated rule.
+Step 8: Count the total number of rules generated.
+Step 9: Sort the rules based on lift in descending order.
+Step 10: Display the top 10 strongest rules based on lift.
+Step 11: Filter strong rules where lift is greater than 2.
+Step 12: Display the top strong rules after filtering.
+Step 13: Save the generated FP-Growth rules into a CSV file.
+Step 14: Display the working directory where the file is stored.
+
+
+PROGRAM
+*********
+# Load libraries
+library(arules)
+library(arulesViz)
+
+# Load Groceries dataset
+data(Groceries)
+
+# View dataset summary
+summary(Groceries)
+
+# Inspect first 5 transactions
+inspect(Groceries[1:5])
+
+# Apply ECLAT algorithm to generate frequent itemsets
+itemsets <- eclat(Groceries,
+                  parameter = list(supp = 0.01,
+                                   maxlen = 5))
+
+# Check number of frequent itemsets
+length(itemsets)
+
+# Generate association rules from frequent itemsets
+rules_eclat <- ruleInduction(itemsets,
+                             Groceries,
+                             confidence = 0.5)
+
+# Check number of rules
+length(rules_eclat)
+
+# View top 10 rules by lift
+inspect(head(sort(rules_eclat,
+                  by = "lift",
+                  decreasing = TRUE), 10))
+
+# Filter strong rules (lift > 2)
+strong_rules_eclat <- subset(rules_eclat, lift > 2)
+
+# Inspect strong rules
+inspect(head(sort(strong_rules_eclat,
+                  by = "lift",
+                  decreasing = TRUE), 10))
+
+# Plot top frequent items
+itemFrequencyPlot(Groceries, topN = 10)
+
+# Save rules to CSV
+write(rules_eclat,
+      file = "eclat_rules.csv",
+      sep = ",",
+      quote = TRUE)
+
+# Show working directory
+getwd()
+
+
+
+RESULT
+*******
+The FP-Growth algorithm successfully generated association rules from the Groceries dataset, and strong rules were identified based on support, confidence, and lift measures.

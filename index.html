@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text File Viewer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 2rem;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        h1 {
+            color: #444;
+        }
+        select {
+            padding: 0.5rem;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+        #content {
+            white-space: pre-wrap;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 1rem;
+            max-height: 70vh;
+            overflow: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>R programming lab</h1>
+
+    <label for="fileSelect">Choose a file:</label>
+    <select id="fileSelect">
+        <option value="">-- Select a file --</option>
+        <option value="1. explanatory data analysis.txt">1. explanatory data analysis.txt</option>
+        <option value="2. handle missing values.txt">2. handle missing values.txt</option>
+        <option value="3. min max normalization.txt">3. min max normalization.txt</option>
+        <option value="4. dimensionality reduction.txt">4. dimensionality reduction.txt</option>
+        <option value="5. naive bayes algorithm.txt">5. naive bayes algorithm.txt</option>
+        <option value="6. decision tree algorithm.txt">6. decision tree algorithm.txt</option>
+        <option value="7. k means clustering.txt">7. k means clustering.txt</option>
+        <option value="8. hierarchical clustering.txt">8. hierarchical clustering.txt</option>
+        <option value="9. apriori algorithm.txt">9. apriori algorithm.txt</option>
+        <option value="10. fp growth algorithm.txt">10. fp growth algorithm.txt</option>
+    </select>
+
+    <div id="content">Select a file to view its contents.</div>
+
+    <script>
+        const select = document.getElementById('fileSelect');
+        const contentDiv = document.getElementById('content');
+
+        select.addEventListener('change', () => {
+            const fileName = select.value;
+            if (!fileName) {
+                contentDiv.textContent = 'Select a file to view its contents.';
+                return;
+            }
+
+            fetch(fileName)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Unable to fetch file');
+                    }
+                    return response.text();
+                })
+                .then(text => {
+                    contentDiv.textContent = text;
+                })
+                .catch(err => {
+                    contentDiv.textContent = 'Error loading file: ' + err.message;
+                });
+        });
+    </script>
+</body>
+</html>

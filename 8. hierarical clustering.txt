@@ -1,0 +1,68 @@
+Hierarchical Clustering and Dendrogram Visualization
+******************************************************
+
+Aim:
+*****
+To perform Hierarchical Clustering on the Iris dataset and represent the cluster structure using a dendrogram in R.
+
+Algorithm:
+***********
+Step 1: Load the Iris dataset using data(iris).
+Step 2: Display the dataset to understand its structure.
+Step 3: Select only the numerical features from the dataset.
+Step 4: Standardize the data using the scale() function to normalize feature values.
+Step 5: Compute the distance matrix using Euclidean distance with the dist() function.
+Step 6: Apply hierarchical clustering using the hclust() function with the complete linkage method.
+Step 7: Display the hierarchical clustering result.
+Step 8: Plot the dendrogram to visualize the hierarchical structure of clusters.
+Step 9: Cut the dendrogram into 3 clusters using the cutree() function.
+Step 10: Assign cluster labels to each data point.
+Step 11: Add cluster labels to the dataset.
+
+Program:
+*********
+# Load dataset
+data(iris)
+head(iris,10)
+
+# Select numeric features
+iris_data <- iris[, 1:4]
+
+# Standardize data
+iris_scaled <- scale(iris_data)
+head(iris_scaled)
+
+# Compute distance matrix
+dist_matrix <- dist(iris_scaled, method = "euclidean")
+as.matrix(dist_matrix)[1:6, 1:6]
+dim(as.matrix(dist_matrix))
+
+# Apply hierarchical clustering
+hc_result <- hclust(dist_matrix, method = "complete")
+hc_result
+
+
+# Plot dendrogram
+plot(hc_result, main = "Hierarchical Clustering Dendrogram", xlab = "Samples", ylab = "Height")
+
+# Cut dendrogram to form 3 clusters
+clusters <- cutree(hc_result, k = 3)
+clusters
+
+
+# Add cluster labels to dataset
+iris_clustered <- data.frame(iris_data, Cluster = as.factor(clusters))
+iris_clustered
+
+head(iris_clustered[iris_clustered$Cluster == 1, ])
+head(iris_clustered[iris_clustered$Cluster == 2, ])
+head(iris_clustered[iris_clustered$Cluster == 3, ])
+
+table(clusters)
+table(clusters, iris$Species)
+rect.hclust(hc_result, k = 3, border = "red")
+
+
+Result:
+********
+Hierarchical clustering grouped the Iris data into three clusters. The dendrogram clearly showed how the samples are related.
