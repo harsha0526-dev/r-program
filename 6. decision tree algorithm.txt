@@ -15,9 +15,9 @@ Step 8: Calculate the accuracy of the model.
 
 PROGRAM:
 ********
-# Load required libraries
-library(rpart)
-library(rpart.plot)
+# Install packages (run only once)
+install.packages("rpart")
+install.packages("rpart.plot")
 
 # Load dataset
 data(iris)
